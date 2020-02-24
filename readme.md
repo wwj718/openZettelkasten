@@ -32,10 +32,10 @@ Zettelkasten是一种笔记系统，核心思想很简单: 笔记独立地记录
 content
 
 ## ref
-- [note_name](note_name.md)
+- [note_name](xxx)
 
 ## Links
-- [note_name](note_name.md)
+- [note_name](xxx)
 ```
 
 你可以手动创建笔记(只是纯文本而已，没有魔法)，也可以使用脚本工具(见下文)。
@@ -136,20 +136,22 @@ readme.md
 
 默认将打开浏览器，使用svg渲染笔记网络。
 
+<img src="img/link_graph1.png" width=600>
+
+
 你也可以使用[networkx](https://networkx.github.io/)来构建网络图:
 
 `fab link-graph --mode=pyvis`
+
+<img src="img/link_graph2.png" width=600>
 
 代码都很简单，只要熟悉使用[networkx](https://networkx.github.io/)和可视化工具，你可以构建任何网络图，你也可以利用networkx与你的网络深入对话。
 
 ### 搜索笔记
 `fab search key_word`
 
-```bash
-➜  Zettelkasten git:(master) ✗ fab search 原则
-```
+<img src="img/note_search.png" width=600>
 
-命令行中搜索结果会高亮显示。
 
 使用了ack-grep。
 

@@ -140,7 +140,7 @@ def link_graph(c, mode="md"):
         g = Network(notebook=True, width=1300, height=700)
         g.from_nx(dg)
         viz_html = 'note_graph.html'
-        # g.show(viz_html)
+        g.show(viz_html)
         open_note_with_default_editor(viz_html)
         # nx.draw(dg)
 
