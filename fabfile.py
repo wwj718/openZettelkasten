@@ -10,6 +10,9 @@ from fabric import task
 '''
 tip
     危险命令要求用户使用input确认, are you sure?
+
+todo：
+    提取tags和提取links的正则表达式写得很烂，很多边缘情况没考虑，有空重写
 '''
 
 
