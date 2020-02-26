@@ -1,4 +1,4 @@
-# pip3 install fabric colorama
+# pip3 install fabric
 import time
 import subprocess
 from pathlib import Path
@@ -6,7 +6,6 @@ import re
 import platform
 from pprint import pprint
 from fabric import task
-
 '''
 tip
     危险命令要求用户使用input确认, are you sure?
@@ -14,6 +13,8 @@ tip
 todo：
     提取tags和提取links的正则表达式写得很烂，很多边缘情况没考虑，有空重写
 '''
+
+note_name_pattern = r'\d{8}_\d{6}_.+\.md'
 
 
 def open_note_with_default_editor(path):
@@ -29,13 +30,21 @@ def open_note_with_default_editor(path):
     return [cmd, str(path)]
 
 
+def get_all_notes():
+    mds = list(Path('.').glob("*.md"))  # all markdown file
+    notes = [md.name for md in mds if re.match(note_name_pattern, md.name)]
+    return notes # note Path list
+
+
 @task
 def ls(c):
     '''
     列出所有笔记
+    保持与ls输出一致
     '''
-    cmd = "ls *md"
-    c.run(cmd)
+    notes = get_all_notes()
+    for note in notes:
+        print(note)
 
 
 note_template = '''# note_title
@@ -58,7 +67,7 @@ def new(c, name):
     '''
     now = time.strftime("%Y%m%d_%H%M%S", time.localtime())
     new_note_name = f'{now}_{name}.md'
-    new_note_content = note_template
+    new_note_content = note_template.replace("note_title", name)
     with open(new_note_name, 'a+') as f:
         f.write(new_note_content)
     print(f'新笔记 {new_note_name} 创建成功')
@@ -76,18 +85,21 @@ def get_ack_cmd():
         ack = "ack-grep"
     return ack
 
+
 @task
 def tags(c, mode="all"):  # mode : tags, all
     '''
     列出所有标签: --mode=[all/only]
+
+    使用ack-grep
     '''
     ack = get_ack_cmd()
     if mode == "all":
-        cmd = ack + " '\#{1}[^(\s|\#)]+' *.md" # 正则表达式，提取标签
+        cmd = ack + " '\#{1}[^(\s|\#)]+' 20*.md"  # 20xx年(21世纪)的md笔记，弱模式匹配（足够），可以过滤掉readme.md
         subprocess.call(cmd, shell=True)
         # print(mode)
     if mode == "only":
-        cmd = ack + " -h '\#{1}[^(\s|\#)]+' *.md"
+        cmd = ack + " -h '\#{1}[^(\s|\#)]+' 20*.md" # 20xx年(21世纪)的md笔记，弱模式匹配（足够），可以过滤掉readme.md
         results = subprocess.check_output(cmd, shell=True)
         tags = set(results.decode().strip().split())
         print(tags)
@@ -96,16 +108,16 @@ def tags(c, mode="all"):  # mode : tags, all
 def get_all_links():
     '''
     收集所有note指向的note列表(note:[note])
+
+    todo 使用pharo来做可视化。
     '''
-    mds = list(Path('.').glob("*.md")) # all markdown file
-    note_pattern = r'\d{8}_\d{6}_.+\.md'
-    notes = [md.name for md in mds if re.match(note_pattern,md.name)]
+    notes = get_all_notes()
     all_links = {}
     for note_file_name in notes:
         with open(note_file_name) as f:
             content = f.read()
-            # 使用正则取出所有links: 20200223_2136-Zettelkasten笔记原则.md
-            pattern = r'(?<=\()[^\[\(]+?.md(?=\))'
+            # 使用正则取出所有links: 20200223_2136_Zettelkasten笔记原则.md
+            pattern = r'(?<=\()'+ note_name_pattern + r'(?=\))' # re 环顾
             note_links = list(set(re.findall(pattern, content)))
             all_links[note_file_name] = note_links
     return all_links
@@ -123,7 +135,7 @@ def git_backup(c):
 @task
 def link_graph(c, mode="md"):
     '''
-    列出笔记之间的连接关系 --mode=[md/pyvis]
+    列出笔记之间的连接关系 --mode=[md/pyvis/cli]
         note --link--> note
         note:[note]
     '''
@@ -166,5 +178,5 @@ def link_graph(c, mode="md"):
 def search(c, word):
     # 区分mac/linux
     ack = get_ack_cmd()
-    cmd = f"{ack} {word}  *.md"
+    cmd = f"{ack} {word}  20*.md" # 20xx年(21世纪)的md笔记，弱模式匹配（足够），可以过滤掉readme.md
     subprocess.call(cmd, shell=True)
