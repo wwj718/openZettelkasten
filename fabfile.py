@@ -97,11 +97,12 @@ def get_all_links():
     '''
     收集所有note指向的note列表(note:[note])
     '''
-    notes = list(Path('.').glob("*.md"))
+    mds = list(Path('.').glob("*.md")) # all markdown file
+    note_pattern = r'\d{8}_\d{6}_.+\.md'
+    notes = [md.name for md in mds if re.match(note_pattern,md.name)]
     all_links = {}
-    for note_path in notes:
-        note_file_name = note_path.name
-        with note_path.open() as f:
+    for note_file_name in notes:
+        with open(note_file_name) as f:
             content = f.read()
             # 使用正则取出所有links: 20200223_2136-Zettelkasten笔记原则.md
             pattern = r'(?<=\()[^\[\(]+?.md(?=\))'

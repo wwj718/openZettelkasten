@@ -9,7 +9,7 @@ Zettelkasten是一种笔记系统，核心思想很简单: 笔记独立地记录
 
 构建笔记卡片时，应当遵循以下原则:
 
-[20200223_213607-Zettelkasten笔记原则](20200223_213607-Zettelkasten笔记原则.md)
+[20200223_213607_Zettelkasten笔记原则](20200223_213607_Zettelkasten笔记原则.md)
 
 ---
 
@@ -19,7 +19,7 @@ Zettelkasten是一种笔记系统，核心思想很简单: 笔记独立地记录
 
 所有笔记都平坦放置在目录中(完全扁平)，方便彼此连接。
 
-来看一个真实的笔记(zettel)例子: [20200223_213419-Zettelkasten是绝佳的笔记系统](20200223_213419-Zettelkasten是绝佳的笔记系统.md)
+来看一个真实的笔记(zettel)例子: [20200223_213419_Zettelkasten是绝佳的笔记系统](20200223_213419_Zettelkasten是绝佳的笔记系统.md)
 
 `20200223_213419`是时间戳（`年月日-时分秒`），`Zettelkasten是绝佳的笔记系统` 是笔记title，它是一个Markdown文件(以`.md`结尾)
 
@@ -100,8 +100,8 @@ Available tasks:
 
 ```bash
 ➜  Zettelkasten git:(master) ✗ fab ls
-20200223_213419-Zettelkasten是绝佳的笔记系统.md
-20200223_213607-Zettelkasten笔记原则.md
+20200223_213419_Zettelkasten是绝佳的笔记系统.md
+20200223_213607_Zettelkasten笔记原则.md
 20200224_2052_这是一条测试笔记.md
 readme.md
 ```
@@ -111,10 +111,10 @@ readme.md
 
 ```
 ➜  Zettelkasten git:(master) ✗ fab tags
-20200223_213419-Zettelkasten是绝佳的笔记系统.md
+20200223_213419_Zettelkasten是绝佳的笔记系统.md
 #生产力 #写作 #思想 #笔记
 
-20200223_213607-Zettelkasten笔记原则.md
+20200223_213607_Zettelkasten笔记原则.md
 #原则 #笔记
 
 readme.md
@@ -160,5 +160,5 @@ readme.md
 
 
 ## links
-*  [20200223_2134-Zettelkasten是绝佳的笔记系统](20200223_213419-Zettelkasten是绝佳的笔记系统.md)
-*  [20200223_2136-Zettelkasten笔记原则](20200223_213607-Zettelkasten笔记原则.md)
+*  [20200223_2134-Zettelkasten是绝佳的笔记系统](20200223_213419_Zettelkasten是绝佳的笔记系统.md)
+*  [20200223_2136-Zettelkasten笔记原则](20200223_213607_Zettelkasten笔记原则.md)
