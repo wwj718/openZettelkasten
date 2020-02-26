@@ -148,12 +148,17 @@ readme.md
 代码都很简单，只要熟悉使用[networkx](https://networkx.github.io/)和可视化工具，你可以构建任何网络图，你也可以利用networkx与你的网络深入对话。
 
 ### 搜索笔记
-`fab search key_word`
+`fab search --word key_word`
 
 <img src="img/note_search.png" width=600>
 
+命令行中搜索结果会高亮显示。
 
 使用了ack-grep。
+
+#### 搜索标签
+`fab search --tag tag`
+
 
 ### 备份(git)
 `fab git-backup`

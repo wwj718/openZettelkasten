@@ -175,8 +175,16 @@ def link_graph(c, mode="md"):
 
 
 @task
-def search(c, word):
+def search(c, word="", tag=""):
+    '''
+    fab search --tag tag ; fab search --word key_word 
+    '''
     # 区分mac/linux
-    ack = get_ack_cmd()
-    cmd = f"{ack} {word}  20*.md" # 20xx年(21世纪)的md笔记，弱模式匹配（足够），可以过滤掉readme.md
-    subprocess.call(cmd, shell=True)
+    if tag:
+        ack = get_ack_cmd()
+        cmd = f'{ack} "\#{tag}" 20*.md' # 20xx年(21世纪)的md笔记，弱模式匹配（足够），可以过滤掉readme.md
+        subprocess.call(cmd, shell=True)
+    if word:
+        ack = get_ack_cmd()
+        cmd = f"{ack} {word}  20*.md" # 20xx年(21世纪)的md笔记，弱模式匹配（足够），可以过滤掉readme.md
+        subprocess.call(cmd, shell=True)
